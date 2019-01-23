@@ -1,5 +1,8 @@
 # Telephony WS
 
+## Important
+This project is a template for academic purposes, for a better project template, use [Dropwizard](https://www.dropwizard.io/)
+
 ## What
 This is a template for creating a Web REST API using Java, Jetty, Jersey only.
 
