@@ -10,15 +10,10 @@ public class ContactAssembler {
   }
 
   public Contact create(String id, ContactDto contactDto) {
-    return new Contact(id, contactDto.telephoneNumber, contactDto.address, contactDto.name);
+    return new Contact(id, contactDto.telephoneNumber(), contactDto.address(), contactDto.name());
   }
 
   public ContactDto create(Contact contact) {
-    ContactDto contactDto = new ContactDto();
-    contactDto.id = contact.id();
-    contactDto.name = contact.name();
-    contactDto.address = contact.address();
-    contactDto.telephoneNumber = contact.telephoneNumber();
-    return contactDto;
+    return new ContactDto(contact.id(), contact.telephoneNumber(), contact.address(), contact.name());
   }
 }
