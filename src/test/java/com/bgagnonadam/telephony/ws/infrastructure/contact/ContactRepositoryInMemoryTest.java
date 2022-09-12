@@ -24,7 +24,7 @@ public class ContactRepositoryInMemoryTest {
   @BeforeEach
   public void setUp() {
     contactRepositoryInMemory = new ContactRepositoryInMemory();
-    given(contact.getId()).willReturn(CONTACT_ID);
+    given(contact.id()).willReturn(CONTACT_ID);
   }
 
   @Test
