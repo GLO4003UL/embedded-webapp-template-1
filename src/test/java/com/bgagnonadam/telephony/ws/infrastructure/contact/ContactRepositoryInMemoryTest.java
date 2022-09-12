@@ -1,20 +1,19 @@
 package com.bgagnonadam.telephony.ws.infrastructure.contact;
 
 import com.bgagnonadam.telephony.ws.domain.contact.Contact;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ContactRepositoryInMemoryTest {
-
   private static final String CONTACT_ID = "id";
 
   @Mock
@@ -22,7 +21,7 @@ public class ContactRepositoryInMemoryTest {
 
   private ContactRepositoryInMemory contactRepositoryInMemory;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     contactRepositoryInMemory = new ContactRepositoryInMemory();
     BDDMockito.given(contact.getId()).willReturn(CONTACT_ID);
@@ -37,7 +36,6 @@ public class ContactRepositoryInMemoryTest {
     List<Contact> contacts = contactRepositoryInMemory.findAll();
 
     // then
-    assertThat(contacts, org.hamcrest.Matchers.hasItem(contact));
+    assertThat(contacts).containsExactly(contact);
   }
-
 }

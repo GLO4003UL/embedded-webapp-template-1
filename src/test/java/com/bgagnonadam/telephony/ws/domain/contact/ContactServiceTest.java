@@ -1,20 +1,19 @@
 package com.bgagnonadam.telephony.ws.domain.contact;
 
 import com.bgagnonadam.telephony.ws.api.contact.dto.ContactDto;
-import jersey.repackaged.com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ContactServiceTest {
 
   @Mock
@@ -28,26 +27,24 @@ public class ContactServiceTest {
 
   private ContactService contactService;
 
-  @Before
-  public void setUp()
-          throws Exception {
+  @BeforeEach
+  public void setUp() {
     contactService = new ContactService(contactRepository, contactAssembler);
   }
 
   @Test
   public void givenContactsInRepository_whenFindAllContacts_thenReturnDtos()
-          throws Exception {
+    throws Exception {
     // given
-    BDDMockito.given(contactRepository.findAll()).willReturn(Lists.newArrayList(contact));
-    BDDMockito.given(contactAssembler.create(contact)).willReturn(contactDto);
+    given(contactRepository.findAll()).willReturn(List.of(contact));
+    given(contactAssembler.create(contact)).willReturn(contactDto);
 
     // when
     List<ContactDto> contactDtos = contactService.findAllContacts();
 
     // then
-    assertThat(contactDtos, org.hamcrest.Matchers.hasItem(contactDto));
-    Mockito.verify(contactRepository).findAll();
-    Mockito.verify(contactAssembler).create(org.mockito.Matchers.eq(contact));
+    assertThat(contactDtos).contains(contactDto);
+    verify(contactRepository).findAll();
+    verify(contactAssembler).create(contact);
   }
-
 }

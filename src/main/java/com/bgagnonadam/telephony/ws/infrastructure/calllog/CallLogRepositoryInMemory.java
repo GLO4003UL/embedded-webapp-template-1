@@ -2,7 +2,6 @@ package com.bgagnonadam.telephony.ws.infrastructure.calllog;
 
 import com.bgagnonadam.telephony.ws.domain.calllog.CallLog;
 import com.bgagnonadam.telephony.ws.domain.calllog.CallLogRepository;
-import jersey.repackaged.com.google.common.collect.Lists;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,7 @@ public class CallLogRepositoryInMemory implements CallLogRepository {
 
   @Override
   public List<CallLog> findAll() {
-      return Lists.newArrayList(callLogs.values());
+    return callLogs.values().stream().toList();
   }
 
   @Override

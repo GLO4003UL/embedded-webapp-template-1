@@ -4,9 +4,9 @@ package com.bgagnonadam.telephony.ws.api.contact;
 import com.bgagnonadam.telephony.ws.api.contact.dto.ContactDto;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactService;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class ContactResourceImpl implements ContactResource {

@@ -2,20 +2,20 @@ package com.bgagnonadam.telephony.ws.api.contact;
 
 import com.bgagnonadam.telephony.ws.api.contact.dto.ContactDto;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactService;
-import jersey.repackaged.com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
+
+@ExtendWith(MockitoExtension.class)
 public class ContactResourceImplTest {
   @Mock
   private ContactService contactService;
@@ -24,24 +24,21 @@ public class ContactResourceImplTest {
 
   private ContactResource contactResource;
 
-
-  @Before
-  public void setUp()
-          throws Exception {
+  @BeforeEach
+  public void setUp() {
     contactResource = new ContactResourceImpl(contactService);
   }
 
   @Test
   public void whenFindAllContacts_thenDelegateToService() {
     // given
-    BDDMockito.given(contactService.findAllContacts()).willReturn(Lists.newArrayList(contactDto));
+    BDDMockito.given(contactService.findAllContacts()).willReturn(List.of(contactDto));
 
     // when
     List<ContactDto> contactDtos = contactResource.getContacts();
 
     // then
-    assertThat(contactDtos, org.hamcrest.Matchers.hasItem(contactDto));
+    assertThat(contactDtos).containsExactly(contactDto);
     Mockito.verify(contactService).findAllContacts();
   }
-
 }
