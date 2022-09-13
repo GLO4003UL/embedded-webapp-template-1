@@ -1,29 +1,32 @@
 package com.bgagnonadam.telephony.ws;
 
 import com.bgagnonadam.TelephonyWsMain;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.get;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ContactResourceIT {
+  @BeforeAll
+  public static void globalSetUp() {
+    RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+  }
 
-  @Before
-  public void setUp()
-          throws Exception {
-    Thread t = new Thread() {
-      public void run() {
-        try {
-          TelephonyWsMain.main(new String[] {});
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+  @BeforeEach
+  public void setUp() {
+    Thread t = new Thread(() -> {
+      try {
+        TelephonyWsMain.main(new String[]{});
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-    };
+    });
+
     t.setDaemon(true);
     t.start();
   }

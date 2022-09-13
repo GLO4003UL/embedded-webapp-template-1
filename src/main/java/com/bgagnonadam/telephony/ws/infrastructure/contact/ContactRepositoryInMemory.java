@@ -3,7 +3,6 @@ package com.bgagnonadam.telephony.ws.infrastructure.contact;
 import com.bgagnonadam.telephony.ws.domain.contact.Contact;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
-import jersey.repackaged.com.google.common.collect.Lists;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
 
   @Override
   public List<Contact> findAll() {
-      return Lists.newArrayList(contacts.values());
+    return contacts.values().stream().toList();
   }
 
   @Override
@@ -24,8 +23,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
   }
 
   @Override
-  public void update(Contact contact)
-          throws ContactNotFoundException {
+  public void update(Contact contact) throws ContactNotFoundException {
     Contact foundContact = contacts.get(contact.getId());
     if (foundContact != null) {
       contacts.put(contact.getId(), contact);
