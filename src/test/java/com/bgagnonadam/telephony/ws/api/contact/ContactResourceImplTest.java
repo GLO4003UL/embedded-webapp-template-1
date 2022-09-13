@@ -12,17 +12,18 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.verify;
 
 
 @ExtendWith(MockitoExtension.class)
 public class ContactResourceImplTest {
-  @Mock
-  private ContactService contactService;
-  @Mock
-  private ContactDto contactDto;
+  public static final String ID = "id";
+  public static final String PHONE_NUMBER = "phoneNumber";
+  public static final String ADDRESS = "address";
+  public static final String NAME = "name";
 
   private ContactResource contactResource;
+  @Mock
+  private ContactService contactService;
 
   @BeforeEach
   public void setUp() {
@@ -32,6 +33,7 @@ public class ContactResourceImplTest {
   @Test
   public void whenFindAllContacts_thenDelegateToService() {
     // given
+    ContactDto contactDto = new ContactDto(ID, PHONE_NUMBER, ADDRESS, NAME);
     given(contactService.findAllContacts()).willReturn(List.of(contactDto));
 
     // when
@@ -39,6 +41,5 @@ public class ContactResourceImplTest {
 
     // then
     assertThat(contactDtos).containsExactly(contactDto);
-    verify(contactService).findAllContacts();
   }
 }

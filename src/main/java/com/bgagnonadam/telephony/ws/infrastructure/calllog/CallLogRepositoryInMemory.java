@@ -18,7 +18,7 @@ public class CallLogRepositoryInMemory implements CallLogRepository {
 
   @Override
   public void save(CallLog callLog) {
-    callLogs.put(callLog.getId(), callLog);
+    callLogs.put(callLog.id(), callLog);
   }
 
   @Override

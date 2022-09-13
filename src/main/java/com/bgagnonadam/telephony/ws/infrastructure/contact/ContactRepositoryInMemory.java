@@ -24,9 +24,9 @@ public class ContactRepositoryInMemory implements ContactRepository {
 
   @Override
   public void update(Contact contact) throws ContactNotFoundException {
-    Contact foundContact = contacts.get(contact.getId());
+    Contact foundContact = contacts.get(contact.id());
     if (foundContact != null) {
-      contacts.put(contact.getId(), contact);
+      contacts.put(contact.id(), contact);
     } else {
       throw new ContactNotFoundException("Contact not found, cannot be updated");
     }
@@ -34,7 +34,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
 
   @Override
   public void save(Contact contact) {
-    contacts.put(contact.getId(), contact);
+    contacts.put(contact.id(), contact);
   }
 
   @Override

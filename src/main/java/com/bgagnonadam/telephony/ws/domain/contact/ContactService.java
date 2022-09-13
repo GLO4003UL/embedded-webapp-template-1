@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ContactService {
@@ -34,14 +33,12 @@ public class ContactService {
   public void addContact(ContactDto contactDto) {
     LOGGER.info("Add new contact {}", contactDto);
     Contact contact = contactAssembler.create(contactDto);
-    contact.setId(UUID.randomUUID().toString());
     contactRepository.save(contact);
   }
 
   public void updateContact(String id, ContactDto contactDto) throws ContactNotFoundException {
     LOGGER.info("Update contact with id {}", id);
-    Contact contact = contactAssembler.create(contactDto);
-    contact.setId(id);
+    Contact contact = contactAssembler.create(id, contactDto);
     contactRepository.update(contact);
   }
 

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,6 +52,11 @@ public class TelephonyWsMain {
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
     context.setContextPath("/api/");
     ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {
+      @Override
+      public Map<String, Object> getProperties() {
+        return Map.of("jersey.config.server.wadl.disableWadl", "true");
+      }
+
       @Override
       public Set<Object> getSingletons() {
         HashSet<Object> resources = new HashSet<>();
