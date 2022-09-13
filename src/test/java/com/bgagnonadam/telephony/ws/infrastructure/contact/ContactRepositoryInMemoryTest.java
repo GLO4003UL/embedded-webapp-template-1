@@ -15,21 +15,21 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class ContactRepositoryInMemoryTest {
   private static final String CONTACT_ID = "id";
-
-  @Mock
-  private Contact contact;
+  public static final String TELEPHONE_NUMBER = "phoneNumber";
+  public static final String ADDRESS = "address";
+  public static final String CONTACT_NAME = "contactName";
 
   private ContactRepositoryInMemory contactRepositoryInMemory;
 
   @BeforeEach
   public void setUp() {
     contactRepositoryInMemory = new ContactRepositoryInMemory();
-    given(contact.id()).willReturn(CONTACT_ID);
   }
 
   @Test
   public void givenContact_whenFindAll_ThenReturnContactInMemory() {
     //given
+    Contact contact = new Contact(CONTACT_ID, TELEPHONE_NUMBER, ADDRESS, CONTACT_NAME);
     contactRepositoryInMemory.save(contact);
 
     // when

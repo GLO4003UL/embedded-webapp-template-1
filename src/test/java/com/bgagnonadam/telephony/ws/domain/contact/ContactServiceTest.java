@@ -11,40 +11,34 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class ContactServiceTest {
-
-  @Mock
-  private Contact contact;
-  @Mock
-  private ContactDto contactDto;
-  @Mock
-  private ContactRepository contactRepository;
-  @Mock
-  private ContactAssembler contactAssembler;
+  public static final String ID = "id";
+  public static final String TELEPHONE_NUMBER = "somePhoneNumber";
+  public static final String ADDRESS = "address";
+  public static final String NAME = "User Name";
 
   private ContactService contactService;
 
+  @Mock
+  private ContactRepository contactRepository;
+
   @BeforeEach
   public void setUp() {
-    contactService = new ContactService(contactRepository, contactAssembler);
+    contactService = new ContactService(contactRepository, new ContactAssembler());
   }
 
   @Test
-  public void givenContactsInRepository_whenFindAllContacts_thenReturnDtos()
-    throws Exception {
+  public void givenContactsInRepository_whenFindAllContacts_thenReturnDtos() {
     // given
+    Contact contact = new Contact(ID, TELEPHONE_NUMBER, ADDRESS, NAME);
     given(contactRepository.findAll()).willReturn(List.of(contact));
-    given(contactAssembler.create(contact)).willReturn(contactDto);
 
     // when
     List<ContactDto> contactDtos = contactService.findAllContacts();
 
     // then
-    assertThat(contactDtos).contains(contactDto);
-    verify(contactRepository).findAll();
-    verify(contactAssembler).create(contact);
+    assertThat(contactDtos).contains(new ContactDto(ID,TELEPHONE_NUMBER,ADDRESS, NAME));
   }
 }
